@@ -48,7 +48,7 @@ fn main() {
     }
 
     match trans_num {
-        1 => println!("{}\nTranslation: {}", p1, input.trim()),
+        1 => println!("{}\n-# Translation: {}", p1, input.trim()),
         2 => println!("{}\n{}", p1, input.trim()),
         0 => println!("{}", p1),
         _ => println!("Input 1 or 0"),
