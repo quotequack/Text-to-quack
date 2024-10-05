@@ -34,7 +34,6 @@ fn main() {
 
         clp = p1.len();
     }
-    let result = String::from("{}\n-# Translation: {}, p1, input.trim");
-    println!("{}", result);
+    println!("{}\n-# Translation: {}", p1, input.trim());
     io::stdout().flush().unwrap();
 }
