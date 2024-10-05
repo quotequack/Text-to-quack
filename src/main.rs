@@ -4,7 +4,7 @@ use rand::Rng;
 use fltk::{app, button::Button, frame::Frame, input::Input, menu::Choice, prelude::*, window::Window};
 
 fn main() {
-    let mut trans = 0;
+    let trans = Rc::new(RefCell::new(2));
     let app = app::App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Dropdown Menu Example");
 
@@ -24,14 +24,15 @@ fn main() {
     // Wrap input in Rc<RefCell> to allow shared, mutable access
     let input = Rc::new(RefCell::new(String::new()));
 
+    let trans_clone = Rc::clone(&trans);
     btn.set_callback(move |_| {
-        trans = dropdown.value();
-        println!("{}", trans);
+        let trans_value: i32 = *trans_clone.borrow();
+        *std::cell::RefCell::<i32>::borrow_mut(&trans_clone) = dropdown.value();
+        println!("{}", trans_value);
     });
-
     let input_clone = Rc::clone(&input); // Clone Rc for btn2
     btn2.set_callback(move |_| {
-        *input_clone.borrow_mut() = inputfield.value();
+        *std::cell::RefCell::<String>::borrow_mut(&input_clone) = inputfield.value();
     });
 
     let five = String::from("quack");
@@ -40,9 +41,11 @@ fn main() {
     let two = String::from("qu");
 
     let input_clone = Rc::clone(&input); // Clone Rc for btn3
+    let trans_clone = Rc::clone(&trans);
     btn3.set_callback(move |_| {
         let input_value = input_clone.borrow(); // Borrow input value immutably
         let length = input_value.len();
+        let trans_value = *trans_clone.borrow();
         if length == 0 {
             println!("Empty input. Exiting...");
             return;
@@ -65,10 +68,11 @@ fn main() {
                 p1.push_str(&format!("{} ", two));
             }
 
+
             clp = p1.chars().count();  // Track current character length
         }
-
-        let result = match trans {
+        println!("{}",trans_value);
+        let result = match trans_value {
             1 => format!("{}\n-# Translation: {}", p1, input_value),
             2 => format!("{}\n{}", p1, input_value),
             0 => format!("{}", p1),
@@ -77,8 +81,8 @@ fn main() {
                 return;
             }
         };
-
-        label.set_label(&result);  // Set label to the full result
+        println!("{}", trans_value);
+        label.set_label(&result);
     });
 
     wind.end();
