@@ -8,11 +8,16 @@
 
 -# Translation: *ORIGINAL TEXT*
 
+**Translation = 1 is intended to be used in Discord.**
+
 #### If translation = 0
 
 *TEXT IN QUACKS*
 
-**Translation = 1 is intended to be used in Discord or any other markdown programs. Have fun!**
+### If translation = 2
+
+*TEXT IN QUACKS*
+*ORIGINAL TEXT*
 
 ## This project is currently still WIP and new things are going to be added soon:
 GUI elements

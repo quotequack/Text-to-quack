@@ -5,8 +5,7 @@ fn main() {
     println!("Input starter string");
     let mut input: String = String::new();
     io::stdin().read_line(&mut input).expect("Fail");
-
-    println!("Input '1' for translation on and '0' for off");
+    println!("Input '1' for discord translation on, '2' for plain tranlation on and '0' for off");
     let mut trans: String = String::new();
     io::stdin().read_line(&mut trans).expect("Fail");
 
@@ -50,6 +49,7 @@ fn main() {
 
     match trans_num {
         1 => println!("{}\nTranslation: {}", p1, input.trim()),
+        2 => println!("{}\n{}", p1, input.trim()),
         0 => println!("{}", p1),
         _ => println!("Input 1 or 0"),
     }
