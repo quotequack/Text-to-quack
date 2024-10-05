@@ -1,3 +1,5 @@
+use std::rc::Rc;
+use std::cell::RefCell;
 use rand::Rng;
 use fltk::{app, button::Button, frame::Frame, input::Input, menu::Choice, prelude::*, window::Window};
 #[allow(unused_mut)]
@@ -5,23 +7,27 @@ use fltk::{app, button::Button, frame::Frame, input::Input, menu::Choice, prelud
 #[allow(unused_assignments)]
 fn main() {
     let mut trans = 0;
-    let mut input = String::new();
-    let mut app = app::App::default();
+    let app = app::App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Dropdown Menu Example");
-    let mut dropdown = Choice::new(100, 50, 200, 40, "Translation");
+    let mut dropdown = Choice::new(100, 40, 200, 30, "Translation");
     dropdown.add_choice("None|Discord|Plain");
-    let mut btn = Button::new(160, 50, 80, 40, "Update");
-    let mut inputfield = Input::new(100, 150, 200, 40, "Input:");
-    let mut btn2 = Button::new(160, 150, 80, 40, "Submit");
-    let mut btn3 = Button::new(0, 0, 40, 150, "Generate");
-    let mut label = Frame::new(0, 151, 40, 150, "Output");
+    let mut btn = Button::new(320, 40, 60, 30, "Update");
+    let inputfield = Input::new(100, 100, 200, 30, "Input:");
+    let mut btn2 = Button::new(320, 100, 60, 30, "Submit");
+    let mut btn3 = Button::new(100, 160, 80, 40, "Generate");
+    let mut label = Frame::new(200, 160, 180, 40, "Output");
+
+    // Wrap input in Rc<RefCell> to allow shared, mutable access
+    let input = Rc::new(RefCell::new(String::new()));
 
     btn.set_callback(move |_| {
         trans = dropdown.value();
         println!("{}", trans);
     });
+
+    let input_clone = Rc::clone(&input); // Clone Rc for btn2
     btn2.set_callback(move |_| {
-        input = inputfield.value();
+        *input_clone.borrow_mut() = inputfield.value();
     });
 
     let five = String::from("quack");
@@ -29,8 +35,10 @@ fn main() {
     let three = String::from("qak");
     let two = String::from("qu");
 
+    let input_clone = Rc::clone(&input); // Clone Rc for btn3
     btn3.set_callback(move |_| {
-        let length = input.len();
+        let input_value = input_clone.borrow(); // Borrow input value immutably
+        let length = input_value.len();
         if length == 0 {
             println!("Empty input. Exiting...");
             return;
@@ -38,7 +46,7 @@ fn main() {
 
         let mut clp = 0;
         let mut p1 = String::new();
-        
+
         while clp < length {
             let crn = rand::thread_rng().gen_range(1..=4);
 
@@ -54,9 +62,10 @@ fn main() {
 
             clp = p1.len();
         }
+
         let result = match trans {
-            1 => format!("{}\n-# Translation: {}", p1, input),
-            2 => format!("{}\n{}", p1, input),
+            1 => format!("{}\n-# Translation: {}", p1, input_value),
+            2 => format!("{}\n{}", p1, input_value),
             0 => format!("{}", p1),
             _ => {
                 println!("Input 1 or 0");
@@ -64,5 +73,10 @@ fn main() {
             }
         };
         label.set_label(&result);
+        println!("{}", result);
     });
+
+    wind.end();
+    wind.show();
+    app.run().unwrap();
 }
