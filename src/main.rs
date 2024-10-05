@@ -9,7 +9,7 @@ use fltk::{app, button::Button, frame::Frame, input::Input, menu::Choice, prelud
 fn main() {
     let trans = Rc::new(RefCell::new(2));
     let app = app::App::default();
-    let mut wind = Window::new(100, 100, 400, 300, "Dropdown Menu Example");
+    let mut wind = Window::new(100, 100, 400, 300, "Quacker");
     let mut dropdown = Choice::new(100, 40, 200, 30, "Translation:");
     dropdown.add_choice("None|Discord|Plain");
     let mut btn = Button::new(320, 40, 60, 30, "Update");
