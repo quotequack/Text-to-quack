@@ -10,5 +10,7 @@
 
 ### This project is currently still WIP and new things are going to be added soon:
 GUI elements
+
 Translation On/Off
+
 Looping Quack translations
