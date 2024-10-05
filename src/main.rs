@@ -87,6 +87,5 @@ fn main() {
 
 fn typewriter(string_to_type: &str) {
     let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.delay(30);
     enigo.text(string_to_type);
 }
