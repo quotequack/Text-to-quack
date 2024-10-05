@@ -1,5 +1,8 @@
+use enigo::*;
 use std::rc::Rc;
 use std::cell::RefCell;
+use std::thread;
+use std::time::Duration;
 use rand::Rng;
 use fltk::{app, button::Button, frame::Frame, input::Input, menu::Choice, prelude::*, window::Window};
 
@@ -73,9 +76,17 @@ fn main() {
         };
         println!("{}", result);
         label.set_label(&result);
+        thread::sleep(Duration::from_secs(3));
+        typewriter(&result);
     });
 
     wind.end();
     wind.show();
     app.run().unwrap();
+}
+
+fn typewriter(string_to_type: &str) {
+    let mut enigo = Enigo::new(&Settings::default()).unwrap();
+    enigo.delay(30);
+    enigo.text(string_to_type);
 }

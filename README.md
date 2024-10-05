@@ -19,8 +19,4 @@
 *TEXT IN QUACKS*
 *ORIGINAL TEXT*
 
-### COPY THE OUPUT FROM THE TERMINAL 
-
-## This project is currently still WIP and new things are going to be added soon:
-
-Use of enigo to paste the quacks for you after certain seconds
+### OUTPUT WILL BE PRINTED USING YOUR KEYBOARD 3 SECONDS AFTER GENERATION
