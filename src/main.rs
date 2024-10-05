@@ -2,8 +2,21 @@ use std::io::{self, Write};
 use rand::Rng;
 
 fn main() {
+    println!("Input starter string");
     let mut input: String = String::new();
     io::stdin().read_line(&mut input).expect("Fail");
+
+    println!("Input '1' for translation on and '0' for off");
+    let mut trans: String = String::new();
+    io::stdin().read_line(&mut trans).expect("Fail");
+
+    let trans_num: u32 = match trans.trim().parse() {
+        Ok(num) => num,
+        Err(_) => {
+            println!("Please input a number");
+            return;
+        },
+    };
 
     let five = String::from("quack");
     let four = String::from("quak");
@@ -21,7 +34,7 @@ fn main() {
     
     while clp < length {
         let crn = rand::thread_rng().gen_range(1..=4);
-        
+
         if crn == 1 {
             p1.push_str(&format!("{} ", five));
         } else if crn == 2 {
@@ -34,6 +47,12 @@ fn main() {
 
         clp = p1.len();
     }
-    println!("{}\n-# Translation: {}", p1, input.trim());
+
+    match trans_num {
+        1 => println!("{}\nTranslation: {}", p1, input.trim()),
+        0 => println!("{}", p1),
+        _ => println!("Input 1 or 0"),
+    }
+
     io::stdout().flush().unwrap();
 }
