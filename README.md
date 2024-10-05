@@ -14,7 +14,7 @@
 
 *TEXT IN QUACKS*
 
-### If translation = 2
+#### If translation = 2
 
 *TEXT IN QUACKS*
 *ORIGINAL TEXT*
