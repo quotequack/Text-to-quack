@@ -2,7 +2,7 @@
 
 ## This Rust program in the terminal turns the text you input into quacks in 2 preselected formats:
 
-#### If translation = 1
+#### If translation to discord
 
 *TEXT IN QUACKS* 
 
@@ -10,16 +10,17 @@
 
 **Translation = 1 is intended to be used in Discord.**
 
-#### If translation = 0
+#### If translation to none
 
 *TEXT IN QUACKS*
 
-#### If translation = 2
+#### If translation to plain
 
 *TEXT IN QUACKS*
 *ORIGINAL TEXT*
 
-## This project is currently still WIP and new things are going to be added soon:
-GUI elements
+### COPY THE OUPUT FROM THE TERMINAL 
 
-Looping Quack translations
+## This project is currently still WIP and new things are going to be added soon:
+
+Use of enigo to paste the quacks for you after certain seconds
