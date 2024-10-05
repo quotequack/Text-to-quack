@@ -2,18 +2,22 @@ use std::rc::Rc;
 use std::cell::RefCell;
 use rand::Rng;
 use fltk::{app, button::Button, frame::Frame, input::Input, menu::Choice, prelude::*, window::Window};
-#[allow(unused_mut)]
-#[allow(unused_variables)]
-#[allow(unused_assignments)]
+
 fn main() {
     let mut trans = 0;
     let app = app::App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Dropdown Menu Example");
-    let mut dropdown = Choice::new(100, 40, 200, 30, "Translation");
+
+    // Dropdown and Update Button
+    let mut dropdown = Choice::new(100, 40, 200, 30, "Translation:");
     dropdown.add_choice("None|Discord|Plain");
     let mut btn = Button::new(320, 40, 60, 30, "Update");
+
+    // Input Field and Submit Button
     let inputfield = Input::new(100, 100, 200, 30, "Input:");
     let mut btn2 = Button::new(320, 100, 60, 30, "Submit");
+
+    // Generate Button and Output Label
     let mut btn3 = Button::new(100, 160, 80, 40, "Generate");
     let mut label = Frame::new(200, 160, 180, 40, "Output");
 
@@ -47,6 +51,7 @@ fn main() {
         let mut clp = 0;
         let mut p1 = String::new();
 
+        // Adjusted loop to handle full input
         while clp < length {
             let crn = rand::thread_rng().gen_range(1..=4);
 
@@ -60,7 +65,7 @@ fn main() {
                 p1.push_str(&format!("{} ", two));
             }
 
-            clp = p1.len();
+            clp = p1.chars().count();  // Track current character length
         }
 
         let result = match trans {
@@ -72,8 +77,8 @@ fn main() {
                 return;
             }
         };
-        label.set_label(&result);
-        println!("{}", result);
+
+        label.set_label(&result);  // Set label to the full result
     });
 
     wind.end();
