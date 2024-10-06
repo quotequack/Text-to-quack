@@ -4,12 +4,13 @@ use std::cell::RefCell;
 use std::thread;
 use std::time::Duration;
 use rand::Rng;
-use fltk::{app, button::Button, frame::Frame, input::Input, menu::Choice, prelude::*, window::Window};
+use fltk::{app, button::Button, frame::Frame, input::Input, menu::Choice, prelude::*, window::Window, enums::Color};
 
 fn main() {
     let trans = Rc::new(RefCell::new(2));
-    let app = app::App::default();
+    let app = app::App::default().with_scheme(app::Scheme::Gleam);
     let mut wind = Window::new(100, 100, 400, 300, "Quacker");
+    wind.set_color(alpha_composited_color(Color::Black, Color::White, 0.5));
     let mut dropdown = Choice::new(100, 40, 200, 30, "Translation:");
     dropdown.add_choice("None|Discord|Plain");
     let mut btn = Button::new(320, 40, 60, 30, "Update");
@@ -87,5 +88,17 @@ fn main() {
 
 fn typewriter(string_to_type: &str) {
     let mut enigo = Enigo::new(&Settings::default()).unwrap();
-    enigo.text(string_to_type);
+    let _ = enigo.text(string_to_type);
+}
+
+fn alpha_composited_color(col: Color, bg_col: Color, alpha: f32) -> Color {
+    let tup = col.to_rgb();
+    let bg_col = bg_col.to_rgb();
+    let r = alpha * tup.0 as f32 + (1.0 - alpha) * bg_col.0 as f32;
+    let r = r as u8;
+    let g = alpha * tup.1 as f32 + (1.0 - alpha) * bg_col.1 as f32;
+    let g = g as u8;
+    let b = alpha * tup.2 as f32 + (1.0 - alpha) * bg_col.2 as f32;
+    let b = b as u8;
+    Color::from_rgb(r, g, b)
 }
