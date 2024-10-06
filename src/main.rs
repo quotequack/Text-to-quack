@@ -89,6 +89,7 @@ fn main() {
 fn typewriter(string_to_type: &str) {
     let mut enigo = Enigo::new(&Settings::default()).unwrap();
     let _ = enigo.text(string_to_type);
+    let _ = enigo.key(Key::Return, Direction::Click);
 }
 
 fn alpha_composited_color(col: Color, bg_col: Color, alpha: f32) -> Color {
